@@ -1,18 +1,44 @@
-import NavBar from './components/NavBar'
-import './App.css';
-import Banner from './components/Banner';
-import Movies from './components/Movies';
-import Favorite from './components/Favorite';
+import NavBar from "./components/NavBar";
+import "./App.css";
+import Banner from "./components/Banner";
+import Movies from "./components/Movies";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import Favorite from "./components/Favorite";
 
-function App() {
+const AppLayout = () => {
   return (
     <>
       <NavBar />
-      {/* <Banner />
-      <Movies /> */}
-      <Favorite />
+      <Outlet />
     </>
   );
+};
+
+function Body(){
+  return(
+    <>
+    <Banner />
+    <Movies />
+    </>
+  )
 }
 
-export default App;
+const appRouter = createBrowserRouter([
+  {
+    path: "/", // show path for routing
+    element: <AppLayout />, // show component for particular path
+    children: [
+      // show children component for routing
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/favorite",
+        element: <Favorite />,
+      },
+    ],
+  },
+]);
+
+export default appRouter;
